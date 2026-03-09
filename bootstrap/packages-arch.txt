@@ -1,0 +1,23 @@
+# System packages to install
+# Add packages one per line
+btop
+curl
+fastfetch
+fuse2
+fzf
+git
+inetutils
+jq
+less
+nano
+ncdu
+net-tools
+nodejs
+npm
+opencode
+python-pipx
+rsync
+sshfs
+wget
+yq
+zsh

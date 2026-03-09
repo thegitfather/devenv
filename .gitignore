@@ -1,0 +1,50 @@
+# System packages to install
+# Add packages one per line
+
+# Shell history
+.zsh_history
+.bash_history
+
+# Cache directories
+.cache/
+node_modules/
+__pycache__/
+*.pyc
+
+# Python/pip
+.pip/
+.local/lib/
+site-packages/
+
+# OpenCode (regenerated)
+.opencode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Environment files with secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+dotfiles/sgptrc
+dotfiles/opencode.json
+dotfiles/zsh_history
+
+REPORT_*.md
+
+workspace/*
+!workspace/hello-vue
+
+share/

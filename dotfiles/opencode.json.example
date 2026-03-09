@@ -1,0 +1,61 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "name": "openrouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "{env:OPENROUTER_API_KEY}",
+      },
+    },
+    "anthropic": {
+      "name": "Anthropic",
+      "options": {
+        "baseURL": "https://api.anthropic.com",
+        "apiKey": "{env:ANTHROPIC_API_KEY}",
+      },
+    },
+    "agentzero": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "agentzero",
+      "options": {
+        "baseURL": "https://llm.agent-zero.ai/v1",
+        "apiKey": "{env:AGENTZERO_API_KEY}",
+      },
+      "models": {
+        "minimax-m25": {
+          "name": "minimax-m25",
+        },
+        "zai-org-glm-5": {
+          "name": "zai-org-glm-5",
+        },
+        "claude-sonnet-4-6": {
+          "name": "claude-sonnet-4-6",
+        },
+        "openai-gpt-53-codex": {
+          "name": "openai-gpt-53-codex",
+        },
+        "grok-code-fast-1": {
+          "name": "grok-code-fast-1",
+        },
+      },
+    },
+  },
+  "agent": {
+    "code-reviewer": {
+      "description": "Reviews code for best practices and potential issues",
+      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
+      "tools": {
+        // Disable file modification tools for review-only agent
+        "write": false,
+        "edit": false,
+      },
+    },
+  },
+  "permission": {
+    "bash": {
+      "git push *": "ask",
+      "git reset *": "ask",
+    }
+  },
+}

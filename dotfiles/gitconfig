@@ -1,0 +1,20 @@
+[credential]
+  helper = store
+
+[core]
+  editor = nano
+  excludesfile = ~/.dotfiles/gitignore_global
+
+[user]
+  name = john
+  email = john@example.com
+
+[alias]
+  fm = fetch-merge
+  fp = !git fetch && git pull
+
+[branch]
+  autosetuprebase = always
+
+[init]
+  defaultBranch = main

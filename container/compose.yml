@@ -1,0 +1,19 @@
+services:
+  devenv:
+    image: devenv
+    container_name: devenv
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    dns:
+      - 9.9.9.9
+      - 1.1.1.1
+    volumes:
+      - ../dotfiles:/home/devenv/dotfiles
+      - ../workspace:/home/devenv/workspace
+      - ../share:/home/devenv/share
+      - ../bootstrap:/home/devenv/bootstrap
+    working_dir: /home/devenv
+    command: >
+      sh -c "/home/devenv/bootstrap/bootstrap.sh && /bin/zsh"
+    stdin_open: true
+    tty: true

@@ -3,7 +3,7 @@
 
 [core]
   editor = nano
-  excludesfile = ~/.dotfiles/gitignore_global
+  excludesfile = ~/dotfiles/gitignore_global
 
 [user]
   name = john

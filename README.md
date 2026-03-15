@@ -1,13 +1,13 @@
 # devenv
 
-A portable Docker-based Arch Linux development environment with [opencode](https://github.com/anomalyco/opencode), [shell-gpt](https://github.com/TheR1D/shell_gpt), [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh), and [powerlevel10k](https://github.com/romkatv/powerlevel10k).
+A portable Docker-based Debian Linux development environment with [opencode](https://github.com/anomalyco/opencode), [shell-gpt](https://github.com/TheR1D/shell_gpt), [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh), and [powerlevel10k](https://github.com/romkatv/powerlevel10k). Supports both Linux (amd64) and macOS (arm64).
 
 ## Why?
 
 - **Reproducible**: Spin up a fresh dev environment anywhere Docker runs
 - **Portable**: Your dotfiles and workspace follow you between machines
 - **Clean**: Separate your config (dotfiles) from your projects (workspace)
-- **Fast**: Uses `archlinux:base-devel` as the base image
+- **Fast**: Uses `debian:bookworm` as the base image
 
 ## Quick Start
 
@@ -28,7 +28,7 @@ docker compose -f container/compose.yml exec devenv /bin/zsh
 
 Or use the helper script: `./run.sh build && ./run.sh up && ./run.sh attach`.
 
-That's it! You'll be in an Arch Linux container with:
+That's it! You'll be in a Debian Linux container with:
 - [opencode](https://github.com/anomalyco/opencode) CLI tool
 - [shell-gpt](https://github.com/TheR1D/shell_gpt) (sgpt) for AI assistance
 - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) + [powerlevel10k](https://github.com/romkatv/powerlevel10k) theme
@@ -75,7 +75,7 @@ Or use `./run.sh` (build/up/down/stop/attach/exec).
 ### Dockerfile (build time)
 | Component | Description |
 |-----------|-------------|
-| Base image | `archlinux:base-devel` |
+| Base image | `debian:bookworm` |
 | Shell | zsh with [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) |
 | Theme | [powerlevel10k](https://github.com/romkatv/powerlevel10k) (Pure style) |
 | Plugins | zsh-autosuggestions, zsh-history-substring-search, F-Sy-H, z |
@@ -144,7 +144,7 @@ Default settings include:
 
 ### Adding packages
 
-Edit `bootstrap/packages-arch.txt` and add your packages (one per line, comments start with #). The packages will be installed during Docker build.
+Edit `bootstrap/packages-debian.txt` and add your packages (one per line, comments start with #). The packages will be installed during Docker build.
 
 ## Requirements
 

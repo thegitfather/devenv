@@ -7,6 +7,15 @@ DOCKERFILE="container/Dockerfile"
 IMAGE_NAME="devenv"
 CONTAINER_NAME="devenv"
 
+if docker compose version &>/dev/null; then
+    COMPOSE_CMD="docker compose"
+elif docker-compose version &>/dev/null; then
+    COMPOSE_CMD="docker-compose"
+else
+    echo "Error: docker compose not found. Please install Docker Compose."
+    exit 1
+fi
+
 show_help() {
     echo "Usage: ./run.sh <command>"
     echo ""
@@ -39,17 +48,17 @@ cmd_build() {
 
 cmd_up() {
     echo "Starting container: ${CONTAINER_NAME}"
-    env UID="$(id -u)" GID="$(id -g)" docker compose -f "${COMPOSE_FILE}" up -d
+    env UID="$(id -u)" GID="$(id -g)" ${COMPOSE_CMD} -f "${COMPOSE_FILE}" up -d
 }
 
 cmd_down() {
     echo "Removing container: ${CONTAINER_NAME}"
-    docker compose -f "${COMPOSE_FILE}" down
+    ${COMPOSE_CMD} -f "${COMPOSE_FILE}" down
 }
 
 cmd_stop() {
     echo "Stopping container: ${CONTAINER_NAME}"
-    docker compose -f "${COMPOSE_FILE}" stop
+    ${COMPOSE_CMD} -f "${COMPOSE_FILE}" stop
 }
 
 cmd_attach() {

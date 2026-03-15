@@ -1,12 +1,12 @@
 # devenv - Specification
 
-A portable Docker-based Arch Linux development environment with zsh, oh-my-zsh, and essential dev tools.
+A portable Docker-based Debian Linux development environment with zsh, oh-my-zsh, and essential dev tools. Supports both Linux (amd64) and macOS (arm64).
 
 ## Project Overview
 
 - **Project name**: devenv
 - **Type**: Development environment (Docker-based)
-- **Core functionality**: Containerized Arch Linux dev environment with dotfiles, persistent workspace, and share folder
+- **Core functionality**: Containerized Debian Linux dev environment with dotfiles, persistent workspace, and share folder
 - **Target users**: Developers who want a reproducible, portable dev environment
 
 ## Architecture
@@ -21,7 +21,7 @@ devenv/
 ├── share/               # File transfer folder (mounted to ~/share)
 ├── bootstrap/           # Runtime setup scripts
 │   ├── bootstrap.sh     # Symlink creation and config setup
-│   └── packages-arch.txt # System packages to install
+│   └── packages-debian.txt # System packages to install
 ├── README.md            # Project documentation
 ├── QUICKSTART.md        # Command reference
 └── LICENSE              # MIT License
@@ -31,8 +31,8 @@ devenv/
 
 ### Base Image
 
-- **Image**: `archlinux:base-devel`
-- **Rationale**: Minimal base with development tools pre-installed
+- **Image**: `debian:bookworm`
+- **Rationale**: Stable base with broad architecture support (amd64/arm64)
 
 ### User Setup
 
@@ -49,7 +49,7 @@ Build args:
 
 ### System Packages
 
-Install via `pacman` during image build (see `bootstrap/packages-arch.txt`):
+Install via `apt` and `brew` during image build (see `bootstrap/packages-debian.txt`):
 
 | Package | Purpose |
 |---------|---------|
@@ -57,17 +57,16 @@ Install via `pacman` during image build (see `bootstrap/packages-arch.txt`):
 | git | Version control |
 | nodejs | JavaScript runtime |
 | npm | Node package manager |
-| python-pipx | Python CLI tool installer |
+| pipx | Python CLI tool installer |
 | curl, wget | HTTP clients |
 | nano | Text editor |
 | fzf | Fuzzy finder |
 | btop | System monitor |
-| fastfetch | System info |
-| jq, yq | JSON/YAML processors |
+| jq | JSON processor |
 | rsync | File sync |
-| sshfs, fuse2 | SSH filesystem |
-| net-tools, inetutils | Network utilities |
-| opencode | CLI tool for AI assistance |
+| sshfs, fuse3 | SSH filesystem |
+| net-tools, inetutils-ping | Network utilities |
+| opencode (via brew) | CLI tool for AI assistance |
 | less | Pager |
 
 ### Shell Setup

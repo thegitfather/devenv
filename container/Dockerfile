@@ -1,19 +1,35 @@
-FROM archlinux:base-devel
+FROM debian:bookworm
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 ARG USERNAME=devenv
 
 ENV GIT_TERMINAL_PROMPT=0
+ENV DEBIAN_FRONTEND=noninteractive
 
-COPY bootstrap/packages-arch.txt /tmp/packages-arch.txt
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pacman -Sy --noconfirm $(grep -v '^#' /tmp/packages-arch.txt | grep -v '^$' | tr '\n' ' ') && rm /tmp/packages-arch.txt
+COPY bootstrap/packages-debian.txt /tmp/packages-debian.txt
 
-RUN groupadd -g ${GROUP_ID} ${USERNAME} && \
-    useradd -u ${USER_ID} -g ${USERNAME} -m -s /bin/zsh ${USERNAME}
+RUN apt-get update && apt-get install -y $(grep -v '^#' /tmp/packages-debian.txt | grep -v '^$' | tr '\n' ' ') && rm /tmp/packages-debian.txt && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /etc/profile
+
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/${USERNAME}/.local/bin:${PATH}"
+
+RUN brew install opencode
+
+RUN group_name=$(getent group ${GROUP_ID} | cut -d: -f1) && \
+    if [ -z "$group_name" ]; then \
+      groupadd -g ${GROUP_ID} ${USERNAME} && group_name=${USERNAME}; \
+    fi && \
+    useradd -u ${USER_ID} -g $group_name -m -s /bin/zsh ${USERNAME}
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}

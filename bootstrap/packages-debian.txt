@@ -2,11 +2,10 @@
 # Add packages one per line
 btop
 curl
-fastfetch
-fuse2
+fuse3
 fzf
 git
-inetutils
+inetutils-ping
 jq
 less
 nano
@@ -14,10 +13,8 @@ ncdu
 net-tools
 nodejs
 npm
-opencode
-python-pipx
+pipx
 rsync
 sshfs
 wget
-yq
 zsh

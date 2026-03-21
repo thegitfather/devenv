@@ -18,21 +18,25 @@ COPY bootstrap/packages-debian.txt /tmp/packages-debian.txt
 
 RUN apt-get update && apt-get install -y $(grep -v '^#' /tmp/packages-debian.txt | grep -v '^$' | tr '\n' ' ') && rm /tmp/packages-debian.txt && rm -rf /var/lib/apt/lists/*
 
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /etc/profile
-
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/${USERNAME}/.local/bin:${PATH}"
-
-RUN brew install opencode
-
 RUN group_name=$(getent group ${GROUP_ID} | cut -d: -f1) && \
     if [ -z "$group_name" ]; then \
       groupadd -g ${GROUP_ID} ${USERNAME} && group_name=${USERNAME}; \
     fi && \
     useradd -u ${USER_ID} -g $group_name -m -s /bin/zsh ${USERNAME}
 
+RUN mkdir -p /home/linuxbrew/.linuxbrew && \
+    chown -R ${USER_ID}:${GROUP_ID} /home/linuxbrew
+
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
+ENV HOME="/home/${USERNAME}"
+ENV NONINTERACTIVE=1
+RUN /bin/bash -lc "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/${USERNAME}/.local/bin:${PATH}"
+
+RUN brew install anomalyco/tap/opencode
 
 RUN pipx install shell-gpt
 

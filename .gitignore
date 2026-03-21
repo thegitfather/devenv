@@ -40,7 +40,7 @@ Thumbs.db
 
 dotfiles/sgptrc
 dotfiles/opencode.json
-dotfiles/zsh_history
+dotfiles/zsh_history*
 
 REPORT_*.md
 
